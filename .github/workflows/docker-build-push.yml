@@ -23,7 +23,7 @@ jobs:
 
       - name: Construir la imagen de Docker
         run: |
-          docker build -t gbzz24/assessment3:latest .
+          docker build -t gbzz24/assessment3:latest ./punto_3
 
       - name: Publicar la imagen en Docker Hub
         run: |
