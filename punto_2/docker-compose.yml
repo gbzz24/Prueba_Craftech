@@ -1,0 +1,53 @@
+#version: '3.8'
+
+services:
+
+  db:
+    container_name: database
+    image: postgres:12.0-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - prueba-net
+
+
+  back:
+      build: ./backend
+      env_file:
+        - ./backend/.env.postgres
+      environment:
+        SQL_PASSWORD: ${POSTGRES_PASSWORD}
+        SQL_USER: ${POSTGRES_USER}
+        SQL_DATABASE: ${POSTGRES_DB}
+
+      ports:
+        - 8000:8000
+      depends_on:
+        - db
+      networks:
+        - prueba-net
+
+  front:
+      build: ./frontend
+      #env_file:
+      #  - ./.env
+      ports:
+        - 3000:3000
+      networks:
+        - prueba-net
+
+volumes:
+  postgres_data:
+  static:
+  media:
+
+networks:
+  prueba-net:
+  

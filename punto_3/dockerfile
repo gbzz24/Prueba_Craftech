@@ -1,0 +1,8 @@
+FROM nginx:stable
+
+#Directorio de trabajo
+
+WORKDIR /usr/share/nginx/html
+
+#Copy index file
+COPY ./index.html index.html
